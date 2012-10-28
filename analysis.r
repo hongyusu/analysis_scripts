@@ -1,8 +1,8 @@
 
 
 
-samples=c('emotions','yeast','scene','enron','medical','toy10','toy50')
-#samples=c('toy10')
+#samples=c('emotions','yeast','scene','enron','medical','toy10','toy50')
+samples=c('toy10')
 
 pdf(sprintf('../plots/plot.pdf'),height=4*length(samples),width=20)
 par(mfrow=c(length(samples),5))
@@ -26,7 +26,7 @@ for(sample in samples)
     colnames(d)=c('Acc','Vec','Pre','Rec','F1','AUC1','AUC2')
 
     for(i in c(1,2,5,6,7))
-    {plot(d[,i])}
+    {plot(d[,i],main=sprintf("%s",sample),ylab=sprintf('%s',colnames(d)[i]))}
 }
 
 dev.off()
