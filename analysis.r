@@ -1,8 +1,8 @@
 
 
 
-#samples=c('emotions','yeast','scene','enron','medical','toy10','toy50')
-samples=c('toy10')
+samples=c('emotions','yeast','scene','enron','medical','toy10','toy50')
+#samples=c('toy10')
 
 pdf(sprintf('../plots/plot.pdf'),height=4*length(samples),width=20)
 par(mfrow=c(length(samples),5))
@@ -16,11 +16,11 @@ for(sample in samples)
     d=rbind(d,tmp[2,])
     tmp=as.matrix(read.table(sprintf('../results/%s_perfAda',sample),sep=','))   
     d=rbind(d,tmp[2,])
-    tmp=as.matrix(read.table(sprintf('../results/%s_perfMTL',sample),sep=','))   
+    tmp=matrix(rep(NA,14),2,7);try(tmp=as.matrix(read.table(sprintf('../results/%s_perfMTL',sample),sep=','))) 
     d=rbind(d,tmp[2,])
-    tmp=as.matrix(read.table(sprintf('../results/%s_perfPairEns',sample),sep=','))   
+    tmp=matrix(rep(NA,35),5,7);try(tmp=as.matrix(read.table(sprintf('../results/%s_perfPairEns',sample),sep=','))) 
     d=rbind(d,tmp[-1,])
-    tmp=as.matrix(read.table(sprintf('../results/%s_perfTreeEns',sample),sep=','))   
+    tmp=matrix(rep(NA,35),5,7);try(tmp=as.matrix(read.table(sprintf('../results/%s_perfTreeEns',sample),sep=',')))   
     d=rbind(d,tmp[-1,])
     rownames(d)=c('SVM','Bag','Ada','MTL','PairRand','PairBin','PairVal','PairMad','TreeRand','TreeBin','TreeVal','TreeMad') 
     colnames(d)=c('Acc','Vec','Pre','Rec','F1','AUC1','AUC2')
