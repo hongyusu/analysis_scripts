@@ -51,7 +51,7 @@ for(mea in c(1,2,5))
     d=cbind(d,tmp[,mea])
     tmp=tryCatch({tmp=as.matrix(read.table(sprintf('../results/%s_perfMad%sEnsProc',sam,type),sep=','))},error=function(e) tmp=matrix(rep(NA,420),60,7))
     d=cbind(d,tmp[,mea])
-    yl=tryCatch({yl=c(min(d),max(d))},error=function(e) yl=c(0,1))
+    if(length(d[is.na(d)]==0)){yl=c(0,1)}else{yl=c(min(d,na.rm=TRUE),max(d,na.rm=TRUE))}
     plot(d[,1],col=2,lty=2,pch=2,ylim=yl,type='b',ylab=measures[mea],xlab='size',main=sprintf('%s %s',sam,type))
     lines(d[,2],col=3,lty=3,pch=3,type='b')
     lines(d[,3],col=4,lty=4,pch=4,type='b')
