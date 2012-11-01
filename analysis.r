@@ -2,7 +2,7 @@
 
 
 samples=c('emotions','yeast','scene','enron','cal500','fp','cancer','medical','toy10','toy50')
-samples=c('toy10')
+#samples=c('toy10')
 
 pdf(sprintf('../plots/plot.pdf'),height=4*length(samples),width=20)
 par(mfrow=c(length(samples),3))
@@ -51,7 +51,8 @@ for(mea in c(1,2,5))
     d=cbind(d,tmp[,mea])
     tmp=tryCatch({tmp=as.matrix(read.table(sprintf('../results/%s_perfMad%sEnsProc',sam,type),sep=','))},error=function(e) tmp=matrix(rep(NA,420),60,7))
     d=cbind(d,tmp[,mea])
-    plot(d[,1],col=2,lty=2,pch=2,ylim=c(min(d),max(d)),type='b',ylab=measures[mea],xlab='size',main=sprintf('%s %s',sam,type))
+    yl=tryCatch({yl=c(min(d),max(d))},error=function(e) yl=c(0,1))
+    plot(d[,1],col=2,lty=2,pch=2,ylim=yl,type='b',ylab=measures[mea],xlab='size',main=sprintf('%s %s',sam,type))
     lines(d[,2],col=3,lty=3,pch=3,type='b')
     lines(d[,3],col=4,lty=4,pch=4,type='b')
     if(type=='Pair'&& mea==1){legend('bottomright',lty=c(2:4),col=c(2:4),pch=c(2:4),c('Bin','Val','Mad'))}
